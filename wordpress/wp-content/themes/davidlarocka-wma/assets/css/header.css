@@ -1,0 +1,189 @@
+/* ==========================
+   HEADER
+========================== */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.container-header {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+
+    height: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ==========================
+   LOGO
+========================== */
+
+.logo {
+    color: #111827;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+}
+
+/* ==========================
+   MENÚ DESKTOP
+========================== */
+
+.main-navigation .menu {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.main-navigation a {
+    color: #374151;
+    text-decoration: none;
+    font-weight: 500;
+    transition: .3s;
+    position: relative;
+}
+
+.main-navigation a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+
+    width: 0;
+    height: 2px;
+
+    background: #E31B23;
+    transition: .3s;
+}
+
+.main-navigation a:hover {
+    color: #E31B23;
+}
+
+.main-navigation a:hover::after {
+    width: 100%;
+}
+
+/* ==========================
+   BOTÓN INSCRÍBETE
+========================== */
+
+.btn-inscribete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #E31B23;
+    color: #fff;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    padding: 12px 24px;
+    border-radius: 999px;
+
+    transition: .3s;
+}
+
+.btn-inscribete:hover {
+    background: #c9151c;
+    transform: translateY(-2px);
+}
+
+/* ==========================
+   BOTÓN HAMBURGUESA
+========================== */
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+
+    color: #111827;
+    font-size: 30px;
+
+    cursor: pointer;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 768px) {
+
+    .container-header {
+        height: 70px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-navigation {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+
+        background: #ffffff;
+
+        max-height: 0;
+        overflow: hidden;
+
+        transition: max-height .3s ease;
+
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .main-navigation.active {
+        max-height: 400px;
+    }
+
+    .main-navigation .menu {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .main-navigation li {
+        width: 100%;
+    }
+
+    .main-navigation a {
+        display: block;
+        padding: 18px 24px;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .btn-inscribete {
+        display: none;
+    }
+}
+
+.site-brand__logo {
+    display: block;
+    height: 205px;
+    width: auto;
+}
+
+.main-navigation a.active {
+    color: #E31B23;
+}
+
+.main-navigation a.active::after {
+    width: 100%;
+}

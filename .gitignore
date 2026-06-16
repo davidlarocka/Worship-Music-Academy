@@ -1,6 +1,14 @@
 .env
 db_data/
-wordpress/
+
+wordpress/*
+!wordpress/wp-content/
+wordpress/wp-content/*
+!wordpress/wp-content/themes/
+wordpress/wp-content/themes/*
+!wordpress/wp-content/themes/davidlarocka-wma/
+!wordpress/wp-content/themes/davidlarocka-wma/**
+
 app/vendor/
 app/writable/cache/
 app/writable/logs/
