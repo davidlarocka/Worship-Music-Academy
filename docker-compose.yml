@@ -1,0 +1,92 @@
+services:
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: wma_nginx
+    depends_on:
+      - wordpress
+      - app
+    ports:
+      - "${NGINX_PORT:-8080}:80"
+    volumes:
+      - ./wordpress:/var/www/html
+      - ./app:/var/www/codeigniter
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - wma
+
+  wordpress:
+    image: wordpress:6.6-php8.2-fpm-alpine
+    container_name: wma_wordpress
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-wma_wordpress}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wma_user}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wma_password}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', '${WP_HOME:-http://worshipmusicacademy.localhost:8080}');
+        define('WP_SITEURL', '${WP_SITEURL:-http://worshipmusicacademy.localhost:8080}');
+    volumes:
+      - ./wordpress:/var/www/html
+    networks:
+      - wma
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    container_name: wma_app
+    depends_on:
+      - db
+    environment:
+      CI_ENVIRONMENT: ${CI_ENVIRONMENT:-development}
+      APP_BASE_URL: ${APP_BASE_URL:-http://worshipmusicacademy.localhost:8080/app/}
+      database.default.hostname: db
+      database.default.database: ${APP_DB_NAME:-wma_app}
+      database.default.username: ${APP_DB_USER:-wma_user}
+      database.default.password: ${APP_DB_PASSWORD:-wma_password}
+      database.default.DBDriver: MySQLi
+      database.default.port: 3306
+    volumes:
+      - ./app:/var/www/codeigniter
+    networks:
+      - wma
+
+  db:
+    image: mysql:8.4
+    container_name: wma_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${WORDPRESS_DB_NAME:-wma_wordpress}
+      MYSQL_USER: ${WORDPRESS_DB_USER:-wma_user}
+      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wma_password}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - wma
+
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    container_name: wma_phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+      UPLOAD_LIMIT: 128M
+    ports:
+      - "${PHPMYADMIN_PORT:-8081}:80"
+    networks:
+      - wma
+
+networks:
+  wma:
+    name: wma_network

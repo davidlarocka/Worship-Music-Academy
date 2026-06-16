@@ -1,0 +1,6 @@
+CREATE DATABASE IF NOT EXISTS `wma_app`
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+GRANT ALL PRIVILEGES ON `wma_app`.* TO 'wma_user'@'%';
+FLUSH PRIVILEGES;
