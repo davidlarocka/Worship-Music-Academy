@@ -51,11 +51,15 @@
         <li>
             <a href="<?php echo esc_url(home_url('/planes/')); ?>">Planes</a>
         </li>
+        
 
 		<li class="menu-item menu-item-cta">
-            <a href="https://app.worshipmusicacademy.cl/register">
+            <a href="/app/register">
                 Inscríbete
             </a>
+        </li>
+        <li>
+            <a href="/app/login">Mi cuenta</a>
         </li>
 
     </ul>

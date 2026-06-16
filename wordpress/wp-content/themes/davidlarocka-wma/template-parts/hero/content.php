@@ -15,17 +15,15 @@
         <div class="hero__content">
 
             <span class="hero__badge">
-                Formación musical para músicos de iglesia
+               Para todas las edades
             </span>
 
             <h1 class="hero__title">
-                Aprende música para servir con excelencia
+               Adoración que Forma. 
             </h1>
 
             <p class="hero__description">
-                Desarrolla tus habilidades en guitarra, piano, bajo, batería,
-                canto y producción musical con una metodología enfocada en el
-                ministerio de adoración.
+               Formación que sirve. Somos una academia enfocada en la formación musical ministerial. 
             </p>
 
             <div class="hero__actions">
